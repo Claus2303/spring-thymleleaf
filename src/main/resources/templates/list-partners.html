@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Partner List</title>
+</head>
+<body>
+<h3>Partner List</h3>
+<hr>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Vorname</th>
+        <th>Nachname</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="tempPartner : ${partners}">
+
+        <td th:text="${tempPartner.firstName}" />
+        <td th:text="${tempPartner.lastName}" />
+        <td th:text="${tempPartner.email}" />
+
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>
