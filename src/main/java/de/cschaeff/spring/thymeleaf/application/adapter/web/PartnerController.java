@@ -33,6 +33,22 @@ public class PartnerController {
         model.addAttribute("partners", dtolist);
         return "list-partners";
     }
+    @GetMapping("/suche")
+    public String suchePartner(@RequestParam("suchName") String suchname,  Model model){
+
+        List<Partner> partnerlist = partnerService.findByName(suchname);
+        List<PartnerDTO> dtolist =  new ArrayList<>();
+
+        for (Partner partner: partnerlist){
+            dtolist.add(PartnerDTO.builder().id(partner.getId())
+                    .firstName(partner.getVorname())
+                    .lastName(partner.getName())
+                    .email(partner.getEmail())
+                    .build());
+        }
+        model.addAttribute("partners", dtolist);
+        return "list-partners";
+    }
 
     @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model model){
@@ -50,6 +66,12 @@ public class PartnerController {
                 .email(partner.getEmail())
                 .build());
         return "partner/partner-form";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("partnerId") int id, Model model){
+        partnerService.deleteById(id);
+        return "redirect:/partner/list";
     }
 
     @PostMapping("/save")

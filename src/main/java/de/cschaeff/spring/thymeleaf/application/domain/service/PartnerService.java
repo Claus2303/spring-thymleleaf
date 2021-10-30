@@ -32,6 +32,24 @@ public class PartnerService {
         }
         return partnerliste;
     }
+    public List<Partner> findByName(String name) {
+        List<Partner> partnerliste = new ArrayList<>();
+
+        if (name != null && (name.trim().length() > 0)) {
+            List<PartnerEntity> partnerentitylist = partnerRepository.findByVornameContainsOrNameContainsAllIgnoreCase(name, name);
+            for (PartnerEntity entity: partnerentitylist){
+                partnerliste.add(Partner.builder().id(entity.getId())
+                        .name(entity.getName())
+                        .vorname(entity.getVorname())
+                        .email(entity.getEmail())
+                        .build());
+            }
+        }
+        else {
+            partnerliste = findAll();
+        }
+        return partnerliste;
+    }
 
     public Partner findById(int id) {
         Optional<PartnerEntity> result = partnerRepository.findById(id);

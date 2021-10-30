@@ -14,7 +14,12 @@
     <div class="container">
     <h3>Partner List</h3>
     <hr>
-        <a th:href="@{/partner/showFormForAdd}" class="btn btn-primary btn-sm mb-3">Einfügen Partner</a>
+        <form th:action="@{/partner/suche}" class="form-inline">
+            <a th:href="@{/partner/showFormForAdd}" class="btn btn-primary btn-sm mb-3">Einfügen Partner</a>
+
+            <input class="form-control  ml-5 mr-sm-2 mb-3" type="search" name="suchName" placeholder="Search by name" />
+            <button class="btn btn-success mb-3" type="submit">Search</button>
+        </form>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
             <tr>
@@ -33,8 +38,10 @@
                 <td th:text="${tempPartner.email}" />
                 <td>
                     <a th:href="@{/partner/showFormForUpdate(partnerId=${tempPartner.id})}"
-                       class="btn btn-primary btn-sm">Partner ändern</a>
-
+                       class="btn btn-primary btn-sm">ändern</a>
+                    <a th:href="@{/partner/delete(partnerId=${tempPartner.id})}"
+                       class="btn btn-danger btn-sm"
+                       onclick="if(!(confirm('Möchten Sie den Partner wirklich löschen?'))) return false">löschen</a>
                 </td>
             </tr>
             </tbody>
