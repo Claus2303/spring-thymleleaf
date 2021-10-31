@@ -26,6 +26,7 @@
                 <th>Vorname</th>
                 <th>Nachname</th>
                 <th>Email</th>
+                <th>Adressen</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -36,6 +37,10 @@
                 <td th:text="${tempPartner.firstName}" />
                 <td th:text="${tempPartner.lastName}" />
                 <td th:text="${tempPartner.email}" />
+                <td>
+                    <a th:href="@{/partner/adress/list(partnerId=${tempPartner.id})}"
+                       class="btn btn-primary btn-sm">anzeigen</a>
+                </td>
                 <td>
                     <a th:href="@{/partner/showFormForUpdate(partnerId=${tempPartner.id})}"
                        class="btn btn-primary btn-sm">ändern</a>

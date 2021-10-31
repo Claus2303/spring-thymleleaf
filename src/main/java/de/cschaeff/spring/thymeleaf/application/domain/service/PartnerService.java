@@ -67,11 +67,10 @@ public class PartnerService {
     }
 
     public void save(Partner partner) {
-        partnerRepository.save(PartnerEntity.builder().id(partner.getId())
-                .name(partner.getName())
-                .vorname(partner.getVorname())
-                .email(partner.getEmail())
-                .build());
+
+        PartnerEntity partnerEntity = new PartnerEntity(partner.getName(), partner.getVorname(), partner.getEmail());
+        partnerEntity.setId(partner.getId());
+        partnerRepository.save(partnerEntity);
     }
 
     public void deleteById(int id) {

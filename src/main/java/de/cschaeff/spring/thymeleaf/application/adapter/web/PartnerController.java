@@ -86,7 +86,7 @@ public class PartnerController {
         return "redirect:/partner/list";
     }
 
-    @PostConstruct
+    //@PostConstruct
     private void loadPartners() {
 
         partnerService.save(Partner.builder().id(1)

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Adressen List</title>
+</head>
+<body>
+<div class="container">
+    <h3>Adressen List</h3>
+    <hr>
+
+    <a th:href="@{/partner/adress/showFormForAdd(partnerId=${partnerId})}" class="btn btn-primary btn-sm mb-3">Einfügen Adresse</a>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Postleitzahl</th>
+            <th>Ort</th>
+            <th>Strasse</th>
+            <th>Hausnummer</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempAdresse : ${adresses}">
+
+            <td th:text="${tempAdresse.postleitzahl}" />
+            <td th:text="${tempAdresse.ort}" />
+            <td th:text="${tempAdresse.strasse}" />
+            <td th:text="${tempAdresse.hausnummer}" />
+            <td>
+                <a th:href="@{/partner/adress/showFormForUpdate(adressId=${tempAdresse.id})}"
+                   class="btn btn-primary btn-sm">ändern</a>
+                <a th:href="@{/partner/delete(adressId=${tempAdresse.id})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="if(!(confirm('Möchten Sie die Adresse wirklich löschen?'))) return false">löschen</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <hr>
+    <a th:href="@{/partner/list}">Zurück zur Übersicht</a>
+</body>
+</div>
+</html>
