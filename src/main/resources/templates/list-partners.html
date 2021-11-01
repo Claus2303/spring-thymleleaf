@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<html lang="de" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -11,7 +12,15 @@
         <title>Partner List</title>
 </head>
     <body>
+
+
     <div class="container">
+        <div class="card" style="width: 18rem;">
+            <ul class="list-group list-group-flush">
+                <li th:text="${username}" class="list-group-item">Username</li>
+                <li th:text="${rollen}" class="list-group-item">Rollen</li>
+            </ul>
+        </div>
     <h3>Partner List</h3>
     <hr>
         <form th:action="@{/partner/suche}" class="form-inline">

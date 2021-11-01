@@ -19,7 +19,8 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.inMemoryAuthentication()
                 .withUser(users.username("john").password("test123").roles("EMPLOYEE"))
-                .withUser(users.username("mary").password("test123").roles("MANAGER"))
+                //Für untenstehende Konfiguration benötigt man mind. die Rolle EMPLOYEE und MANAGER
+                .withUser(users.username("mary").password("test123").roles("MANAGER,EMPLOYEE"))
                 .withUser(users.username("susan").password("test123").roles("ADMIN"));
     }
 
@@ -28,6 +29,8 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .anyRequest().authenticated()
+                //.antMatchers("/").hasRole("EMPLOYEE")
+                //.antMatchers("/partner/**").hasRole("MANAGER") --> Um auf Rollenebene zu schützen
                 .and()
                 .formLogin()
                     .loginPage("/showMyLoginPage")
@@ -35,7 +38,12 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginProcessingUrl("/authenticateTheUser")
                     .permitAll()
                 .and()
-                .logout().permitAll();//Zum Ausloggen --> /logout
+                    .logout().permitAll()//Zum Ausloggen --> /logout
+                .and()
+                    .exceptionHandling()
+                    .accessDeniedPage("/access-denied");
+
+
 
     }
 }

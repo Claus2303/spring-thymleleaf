@@ -2,23 +2,31 @@ package de.cschaeff.spring.thymeleaf.application.adapter.web;
 
 import de.cschaeff.spring.thymeleaf.application.domain.bo.Partner;
 import de.cschaeff.spring.thymeleaf.application.domain.service.PartnerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/partner")
 public class PartnerController {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private PartnerService partnerService;
     @GetMapping("/list")
-    public String listPartners(Model model){
+    public String listPartners(Model model, Principal principal){
 
         List<Partner> partnerlist = partnerService.findAll();
         List<PartnerDTO> dtolist =  new ArrayList<>();
@@ -31,6 +39,13 @@ public class PartnerController {
                     .build());
         }
         model.addAttribute("partners", dtolist);
+        model.addAttribute("username", principal.getName());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        //Wegen Problemen mit Thymleaf Tags am Server
+        Set<String> roles = authentication.getAuthorities().stream()
+                .map(r -> r.getAuthority()).collect(Collectors.toSet());
+        model.addAttribute("rollen", roles.toString());
         return "list-partners";
     }
     @GetMapping("/suche")
